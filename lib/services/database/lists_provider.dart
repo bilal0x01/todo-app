@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/static/constants.dart';
+import '../../static/constants.dart';
 
 class ListsProvider {
   static final firestore = FirebaseFirestore.instance;
@@ -23,7 +23,9 @@ class ListsProvider {
   }
 
   static Future<void> updateList(
-      DocumentReference listReference, String listName) async {
+    DocumentReference listReference,
+    String listName,
+  ) async {
     try {
       final payload = {
         'listName': listName,
@@ -36,7 +38,6 @@ class ListsProvider {
   }
 
   static Future<void> deleteList(DocumentReference listReference) async {
-
     try {
       final tasksCollectionRef = listReference.collection('tasks');
       final tasksQuerySnapshot = await tasksCollectionRef.get();

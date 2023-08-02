@@ -49,7 +49,7 @@ class _ListsDashboardState extends State<ListsDashboard>
   void submitData() {
     Navigator.pop(context);
     if (listTitleController.text.isEmpty) {
-      return ;
+      return;
     }
     ListsProvider.createList(listTitleController.text);
     listTitleController.clear();
@@ -67,40 +67,45 @@ class _ListsDashboardState extends State<ListsDashboard>
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return index == widget.listsData.length
-                  ? InkWell(
-                      onTap: () {
-                        showTextfieldSheet(
-                          context: context,
-                          sheetTitle: "Create new list",
-                          sheetWidgetList: [
-                            AppTextField(
-                              editCompleteFunction: submitData,
-                              fieldController: listTitleController,
-                              fieldHintText: "Enter list title",
-                              nextIconKeyboard: false,
-                            ),
-                          ],
-                          sheetSubmitAction: submitData,
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 15,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: AppColors.textColor,
-                              size: 16,
-                            ),
-                            Text(
-                              "New List",
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                          ],
+                  ? Material(
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(5),
+                        splashColor: AppColors.secondaryColor,
+                        splashFactory: InkRipple.splashFactory,
+                        onTap: () {
+                          showTextfieldSheet(
+                            context: context,
+                            sheetTitle: "Create new list",
+                            sheetWidgetList: [
+                              AppTextField(
+                                editCompleteFunction: submitData,
+                                fieldController: listTitleController,
+                                fieldHintText: "Enter list title",
+                                nextIconKeyboard: false,
+                              ),
+                            ],
+                            sheetSubmitAction: submitData,
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 15,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: AppColors.textColor,
+                                size: 16,
+                              ),
+                              Text(
+                                "New List",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )

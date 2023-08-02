@@ -24,7 +24,8 @@ class ListContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listTasksRef = listsData[selectedList]['docReference'] as DocumentReference;
+    final listTasksRef =
+        listsData[selectedList]['docReference'] as DocumentReference;
 
     void submitData() {
       Navigator.pop(context);
@@ -51,7 +52,9 @@ class ListContent extends StatelessWidget {
             child: Column(
               children: [
                 ExpandedFab(
-                    listTasksRef: listTasksRef, reduceIndex: reduceIndex),
+                  listTasksRef: listTasksRef,
+                  reduceIndex: reduceIndex,
+                ),
                 smallVertSpace,
                 IconButton(
                   onPressed: () {

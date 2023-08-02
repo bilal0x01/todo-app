@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/home_screen/home_screen.dart';
-import 'package:todo_app/theme/app_colors.dart';
+
+import 'screens/home_screen/home_screen.dart';
+import 'theme/app_colors.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             color: AppColors.textColor,
           ),
           bodyLarge: TextStyle(
-            fontFamily: "Raleway",
+            fontFamily: "Montserrat",
             fontSize: 16,
             color: AppColors.textColor,
           ),
@@ -56,8 +57,10 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            foregroundColor: const MaterialStatePropertyAll(AppColors.textColor),
-            backgroundColor: const MaterialStatePropertyAll(AppColors.secondaryColor),
+            foregroundColor:
+                const MaterialStatePropertyAll(AppColors.textColor),
+            backgroundColor:
+                const MaterialStatePropertyAll(AppColors.secondaryColor),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -67,8 +70,10 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            overlayColor: const MaterialStatePropertyAll(AppColors.secondaryColor),
-            foregroundColor: const MaterialStatePropertyAll(AppColors.textColor),
+            overlayColor:
+                const MaterialStatePropertyAll(AppColors.secondaryColor),
+            foregroundColor:
+                const MaterialStatePropertyAll(AppColors.textColor),
           ),
         ),
         appBarTheme: const AppBarTheme(

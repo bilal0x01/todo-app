@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/home_screen/widgets/task_item.dart';
 import 'package:todo_app/theme/spaces.dart';
@@ -8,7 +7,7 @@ import '../../../theme/app_colors.dart';
 
 class TasksDashboard extends StatelessWidget {
   const TasksDashboard({super.key, required this.listTasksReference});
-  final DocumentReference listTasksReference;
+  final listTasksReference;
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +52,15 @@ class TasksDashboard extends StatelessWidget {
 
         return ListView.builder(
           itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  TaskItem(
-                    index: index,
-                    snapshot: snapshot,
-                    listTasksReference: listTasksReference,
-                  ),
-                  smallVertSpace,
-                ],
-              );
+            return Column(
+              children: [
+                TaskItem(
+                  taskData: (snapshot.data![index]),
+                  listTasksReference: listTasksReference,
+                ),
+                smallVertSpace,
+              ],
+            );
           },
           itemCount: snapshot.data!.length,
         );
