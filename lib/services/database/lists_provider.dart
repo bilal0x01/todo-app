@@ -36,12 +36,13 @@ class ListsProvider {
   }
 
   static Future<void> deleteList(DocumentReference listReference) async {
+
     try {
       final tasksCollectionRef = listReference.collection('tasks');
       final tasksQuerySnapshot = await tasksCollectionRef.get();
-      tasksQuerySnapshot.docs.forEach((taskDocument) {
+      for (var taskDocument in tasksQuerySnapshot.docs) {
         taskDocument.reference.delete();
-      });
+      }
       await listReference.delete();
     } catch (e) {
       debugPrint(e.toString());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/spaces.dart';
 
-Future<dynamic> showInputBottomSheet ({
+Future<dynamic> showTextfieldSheet({
   required BuildContext context,
   required String sheetTitle,
   required List<Widget> sheetWidgetList,
@@ -31,7 +31,7 @@ Future<dynamic> showInputBottomSheet ({
                 ),
                 OutlinedButton(
                   onPressed: sheetSubmitAction,
-                  child: Text(
+                  child: const Text(
                     "Done",
                   ),
                 ),

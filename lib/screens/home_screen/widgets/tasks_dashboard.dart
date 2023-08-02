@@ -1,35 +1,33 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/services/database/tasks_provider.dart';
-import 'package:todo_app/theme/app_colors.dart';
+import 'package:todo_app/screens/home_screen/widgets/task_item.dart';
+import 'package:todo_app/theme/spaces.dart';
 
-class TasksDashboard extends StatefulWidget {
+import '../../../services/database/tasks_provider.dart';
+import '../../../theme/app_colors.dart';
+
+class TasksDashboard extends StatelessWidget {
   const TasksDashboard({super.key, required this.listTasksReference});
-  final listTasksReference;
+  final DocumentReference listTasksReference;
 
-  @override
-  State<TasksDashboard> createState() => _TasksDashboardState();
-}
-
-class _TasksDashboardState extends State<TasksDashboard> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: TasksProvider.getData(widget.listTasksReference),
+      stream: TasksProvider.getData(listTasksReference),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         if (snapshot.data == null || snapshot.data!.isEmpty) {
           return Center(
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.sizeOf(context).width / 2,
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -55,26 +53,16 @@ class _TasksDashboardState extends State<TasksDashboard> {
 
         return ListView.builder(
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    leading: IconButton(
-                      icon: Icon(Icons.check_box_outline_blank),
-                      color: AppColors.textColor,
-                      onPressed: () {},
-                    ),
-                    title: Text(snapshot.data![index]['docData']['taskName']),
-                    subtitle:
-                        Text(snapshot.data![index]['docData']['taskDetails']),
+              return Column(
+                children: [
+                  TaskItem(
+                    index: index,
+                    snapshot: snapshot,
+                    listTasksReference: listTasksReference,
                   ),
-                ),
-              ],
-            );
+                  smallVertSpace,
+                ],
+              );
           },
           itemCount: snapshot.data!.length,
         );

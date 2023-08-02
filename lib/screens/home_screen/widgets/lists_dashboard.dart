@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/home_screen/widgets/app_text_field.dart';
-import 'package:todo_app/services/database/lists_provider.dart';
-import 'package:todo_app/theme/app_colors.dart';
-import 'package:todo_app/screens/home_screen/widgets/ListItemAnimation.dart';
-import 'package:todo_app/screens/home_screen/widgets/list_content.dart';
-import 'package:todo_app/theme/spaces.dart';
-import 'package:todo_app/utils/show_bottomsheet.dart';
+
+import 'app_text_field.dart';
+import 'list_item_animation.dart';
+import 'list_content.dart';
+import '../../../services/database/lists_provider.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/spaces.dart';
+import '../../../utils/show_textfield_sheet.dart';
 
 class ListsDashboard extends StatefulWidget {
   const ListsDashboard({super.key, required this.listsData});
@@ -25,7 +26,7 @@ class _ListsDashboardState extends State<ListsDashboard>
     super.initState();
     _slideController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
   }
 
@@ -43,16 +44,14 @@ class _ListsDashboardState extends State<ListsDashboard>
     selectedList > 0 ? selectedList-- : selectedList;
   }
 
-  void addList() {
-    if (listTitleController.text.isEmpty) {
-      return null;
-    }
-    ListsProvider.createList(listTitleController.text);
-  }
+  void addList() {}
 
   void submitData() {
     Navigator.pop(context);
-    addList();
+    if (listTitleController.text.isEmpty) {
+      return ;
+    }
+    ListsProvider.createList(listTitleController.text);
     listTitleController.clear();
   }
 
@@ -70,7 +69,7 @@ class _ListsDashboardState extends State<ListsDashboard>
               return index == widget.listsData.length
                   ? InkWell(
                       onTap: () {
-                        showInputBottomSheet(
+                        showTextfieldSheet(
                           context: context,
                           sheetTitle: "Create new list",
                           sheetWidgetList: [
@@ -80,13 +79,12 @@ class _ListsDashboardState extends State<ListsDashboard>
                               fieldHintText: "Enter list title",
                               nextIconKeyboard: false,
                             ),
-                            
                           ],
                           sheetSubmitAction: submitData,
                         );
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
                           vertical: 5,
                           horizontal: 15,
                         ),

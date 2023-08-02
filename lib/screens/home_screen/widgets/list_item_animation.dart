@@ -36,7 +36,7 @@ class ListItemAnimation extends StatelessWidget {
               child: SlideTransition(
                 position: Tween<Offset>(
                   begin: Offset((previousSelectedList - index.toDouble()), 0),
-                  end: Offset(0, 0),
+                  end: const Offset(0, 0),
                 ).animate(_slideController),
                 child: index == selectedList
                     ? Container(
@@ -47,7 +47,7 @@ class ListItemAnimation extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ),
             )
           ],

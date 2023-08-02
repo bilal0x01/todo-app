@@ -9,7 +9,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo App',
       theme: ThemeData(
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           displayLarge: TextStyle(
             fontFamily: "Montserrat",
             fontSize: 26,
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             color: AppColors.textColor,
           ),
           bodyLarge: TextStyle(
-            fontFamily: "Montserrat",
+            fontFamily: "Raleway",
             fontSize: 16,
             color: AppColors.textColor,
           ),
@@ -44,20 +44,20 @@ class MyApp extends StatelessWidget {
             color: AppColors.textColor,
           ),
         ),
-        listTileTheme: ListTileThemeData(
+        listTileTheme: const ListTileThemeData(
           textColor: AppColors.textColor,
         ),
         iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
-            iconSize: MaterialStatePropertyAll(28),
-            padding: MaterialStatePropertyAll(EdgeInsets.all(15)),
+            iconSize: const MaterialStatePropertyAll(28),
+            padding: const MaterialStatePropertyAll(EdgeInsets.all(15)),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            foregroundColor: MaterialStatePropertyAll(AppColors.textColor),
-            backgroundColor: MaterialStatePropertyAll(AppColors.secondaryColor),
+            foregroundColor: const MaterialStatePropertyAll(AppColors.textColor),
+            backgroundColor: const MaterialStatePropertyAll(AppColors.secondaryColor),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -67,22 +67,25 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            overlayColor: MaterialStatePropertyAll(AppColors.secondaryColor),
-            foregroundColor: MaterialStatePropertyAll(AppColors.textColor),
+            overlayColor: const MaterialStatePropertyAll(AppColors.secondaryColor),
+            foregroundColor: const MaterialStatePropertyAll(AppColors.textColor),
           ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.backgroundColor,
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: AppColors.primaryColor,
           secondary: AppColors.secondaryColor,
           background: AppColors.backgroundColor,
         ),
-        bottomSheetTheme: BottomSheetThemeData(
+        bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: AppColors.backgroundColor,
           dragHandleColor: AppColors.textColor,
         ),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

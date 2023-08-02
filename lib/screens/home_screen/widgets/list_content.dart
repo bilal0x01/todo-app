@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/home_screen/widgets/app_text_field.dart';
-import 'package:todo_app/screens/home_screen/widgets/expanded_fab.dart';
-import 'package:todo_app/screens/home_screen/widgets/tasks_dashboard.dart';
-import 'package:todo_app/services/database/tasks_provider.dart';
-import 'package:todo_app/theme/spaces.dart';
-import 'package:todo_app/utils/show_bottomsheet.dart';
+
+import 'app_text_field.dart';
+import 'expanded_fab.dart';
+import 'tasks_dashboard.dart';
+import '../../../services/database/tasks_provider.dart';
+import '../../../theme/spaces.dart';
+import '../../../utils/show_textfield_sheet.dart';
 
 class ListContent extends StatelessWidget {
   ListContent({
@@ -22,12 +24,12 @@ class ListContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listTasksRef = listsData[selectedList]['docReference'];
+    final listTasksRef = listsData[selectedList]['docReference'] as DocumentReference;
 
     void submitData() {
       Navigator.pop(context);
       if (taskNameController.text.isEmpty) {
-        return null;
+        return;
       }
       TasksProvider.createTask(
         listTasksRef,
@@ -39,7 +41,7 @@ class ListContent extends StatelessWidget {
     }
 
     return Expanded(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Stack(children: [
           TasksDashboard(listTasksReference: listTasksRef),
@@ -53,7 +55,7 @@ class ListContent extends StatelessWidget {
                 smallVertSpace,
                 IconButton(
                   onPressed: () {
-                    showInputBottomSheet(
+                    showTextfieldSheet(
                       context: context,
                       sheetTitle: "Create new task",
                       sheetWidgetList: [
@@ -72,7 +74,7 @@ class ListContent extends StatelessWidget {
                       sheetSubmitAction: submitData,
                     );
                   },
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                 ),
               ],
             ),

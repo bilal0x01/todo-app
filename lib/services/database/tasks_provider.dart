@@ -8,8 +8,11 @@ class TasksProvider {
   static const listsCollection = AppConstants.listsCollection;
   static const tasksCollection = AppConstants.tasksCollection;
 
-  static Future<void> createTask(DocumentReference parentListReference,
-      String taskName, String taskDetails) async {
+  static Future<void> createTask(
+    DocumentReference parentListReference,
+    String taskName,
+    String taskDetails,
+  ) async {
     try {
       final payload = {
         'taskName': taskName,
@@ -28,32 +31,50 @@ class TasksProvider {
     }
   }
 
-  // static Future<void> updateList(
-  //     DocumentReference listReference, String listName) async {
-  //   try {
-  //     final payload = {
-  //       'listName': listName,
-  //     };
-  //     await listReference.update(payload);
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     rethrow;
-  //   }
-  // }
+  static Future<void> updateTask(
+    DocumentReference taskReference,
+    DocumentReference parentListReference,
+    String? taskName,
+    String? taskDetails, {
+    bool taskDone = false,
+  }) async {
+    final taskData = firestore
+        .collection(listsCollection)
+        .doc(parentListReference.id)
+        .collection(tasksCollection)
+        .doc(taskReference.id);
+    final existingTaskSnapshot = await taskData.get();
+    final existingTaskName = existingTaskSnapshot.data()!['taskName'];
+    final existingTaskDetails = existingTaskSnapshot.data()!['taskDetails'];
+    try {
+      final payload = {
+        'taskName': taskName ?? existingTaskName,
+        'taskDetails': taskDetails ?? existingTaskDetails,
+        'hasCompleted': taskDone
+      };
+      await taskData.update(payload);
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
 
-  // static Future<void> deleteList(DocumentReference listReference) async {
-  //   try {
-  //     final tasksCollectionRef = listReference.collection('tasks');
-  //     final tasksQuerySnapshot = await tasksCollectionRef.get();
-  //     tasksQuerySnapshot.docs.forEach((taskDocument) {
-  //       taskDocument.reference.delete();
-  //     });
-  //     await listReference.delete();
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     rethrow;
-  //   }
-  // }
+  static Future<void> deleteTask(
+    DocumentReference taskReference,
+    DocumentReference parentListReference,
+  ) async {
+    try {
+      await firestore
+          .collection(listsCollection)
+          .doc(parentListReference.id)
+          .collection(tasksCollection)
+          .doc(taskReference.id)
+          .delete();
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
 
   static Stream<List<Map<String, dynamic>>> getData(
       DocumentReference parentListReference) {
