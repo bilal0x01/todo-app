@@ -10,6 +10,4 @@ class AppColors {
   static const Color textColor = Colors.white;
 
   static const Color subtleColor = Color.fromARGB(255, 33, 33, 33);
-
-  static const Color errorColor = Color.fromARGB(255, 155, 28, 28);
 }

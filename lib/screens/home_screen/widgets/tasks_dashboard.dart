@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/home_screen/widgets/task_item.dart';
-import 'package:todo_app/theme/spaces.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'task_item.dart';
+import '../../../theme/spaces.dart';
 import '../../../services/database/tasks_provider.dart';
 import '../../../theme/app_colors.dart';
 
 class TasksDashboard extends StatelessWidget {
   const TasksDashboard({super.key, required this.listTasksReference});
-  final listTasksReference;
+  final DocumentReference listTasksReference;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class TasksDashboard extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (snapshot.data == null || snapshot.data!.isEmpty) {

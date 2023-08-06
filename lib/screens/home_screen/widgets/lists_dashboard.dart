@@ -9,9 +9,11 @@ import '../../../theme/spaces.dart';
 import '../../../utils/show_textfield_sheet.dart';
 
 class ListsDashboard extends StatefulWidget {
-  const ListsDashboard({super.key, required this.listsData});
+  const ListsDashboard(
+      {super.key, required this.listsData, required this.userId});
 
   final List<Map<String, dynamic>> listsData;
+  final String userId;
 
   @override
   State<ListsDashboard> createState() => _ListsDashboardState();
@@ -51,7 +53,10 @@ class _ListsDashboardState extends State<ListsDashboard>
     if (listTitleController.text.isEmpty) {
       return;
     }
-    ListsProvider.createList(listTitleController.text);
+    ListsProvider.createList(
+      listTitleController.text,
+      widget.userId,
+    );
     listTitleController.clear();
   }
 

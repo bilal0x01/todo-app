@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter/material.dart';
-import 'package:todo_app/static/constants.dart';
+import '../../static/constants.dart';
 
 class TasksProvider {
   static final firestore = FirebaseFirestore.instance;

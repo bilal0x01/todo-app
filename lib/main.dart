@@ -1,9 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'screens/home_screen/home_screen.dart';
-import 'theme/app_colors.dart';
 import 'firebase_options.dart';
+import 'screens/home_screen/home_screen.dart';
+import 'screens/registration_screen/registration_screen.dart';
+import 'theme/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo App',
       theme: ThemeData(
+        fontFamily: 'Montserrat',
         textTheme: const TextTheme(
           displayLarge: TextStyle(
             fontFamily: "Montserrat",
@@ -51,14 +54,17 @@ class MyApp extends StatelessWidget {
         iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
             iconSize: const MaterialStatePropertyAll(28),
-            padding: const MaterialStatePropertyAll(EdgeInsets.all(15)),
+            padding: const MaterialStatePropertyAll(
+              EdgeInsets.all(15),
+            ),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            foregroundColor:
-                const MaterialStatePropertyAll(AppColors.textColor),
+            foregroundColor: const MaterialStatePropertyAll(
+              AppColors.textColor,
+            ),
             backgroundColor:
                 const MaterialStatePropertyAll(AppColors.secondaryColor),
           ),
@@ -76,21 +82,69 @@ class MyApp extends StatelessWidget {
                 const MaterialStatePropertyAll(AppColors.textColor),
           ),
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            overlayColor:
+                MaterialStatePropertyAll(Theme.of(context).colorScheme.error),
+            foregroundColor:
+                const MaterialStatePropertyAll(AppColors.textColor),
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.backgroundColor,
+          actionsIconTheme: IconThemeData(color: AppColors.textColor),
+        ),
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: AppColors.backgroundColor,
+          dragHandleColor: AppColors.textColor,
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: AppColors.primaryColor,
           secondary: AppColors.secondaryColor,
           background: AppColors.backgroundColor,
         ),
-        bottomSheetTheme: const BottomSheetThemeData(
-          backgroundColor: AppColors.backgroundColor,
-          dragHandleColor: AppColors.textColor,
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: AppColors.secondaryColor,
+        ),
+        snackBarTheme: const SnackBarThemeData(
+          backgroundColor: AppColors.secondaryColor,
+          contentTextStyle: TextStyle(
+            color: AppColors.primaryColor,
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.w600,
+          ),
         ),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: SafeArea(
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              if (snapshot.data!.emailVerified) {
+                return HomeScreen(userId: snapshot.data!.uid);
+              } else {
+                FirebaseAuth.instance.signOut();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please verify your email to proceed.'),
+                    ),
+                  );
+                });
+                return const RegistrationScreen();
+              }
+            } else {
+              return const RegistrationScreen();
+            }
+          },
+        ),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

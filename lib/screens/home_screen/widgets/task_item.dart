@@ -1,10 +1,11 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/home_screen/widgets/app_text_field.dart';
-import 'package:todo_app/services/database/tasks_provider.dart';
-import 'package:todo_app/theme/app_colors.dart';
-import 'package:todo_app/theme/spaces.dart';
-import 'package:todo_app/utils/show_textfield_sheet.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'app_text_field.dart';
+import '../../../services/database/tasks_provider.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/spaces.dart';
+import '../../../utils/show_textfield_sheet.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({
@@ -13,9 +14,8 @@ class TaskItem extends StatefulWidget {
     required this.taskData,
   });
 
-//mapstringdynamic
   final Map<String, dynamic> taskData;
-  final listTasksReference;
+  final DocumentReference listTasksReference;
 
   @override
   State<TaskItem> createState() => _TaskItemState();
@@ -42,12 +42,12 @@ class _TaskItemState extends State<TaskItem> {
     }
 
     return Dismissible(
-      background: const Row(
+      background: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Icon(
             Icons.delete_forever,
-            color: AppColors.errorColor,
+            color: Theme.of(context).colorScheme.error,
             size: 28,
           ),
           bigHorzSpace

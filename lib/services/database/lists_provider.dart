@@ -1,16 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter/material.dart';
 import '../../static/constants.dart';
 
 class ListsProvider {
   static final firestore = FirebaseFirestore.instance;
   static const listsCollection = AppConstants.listsCollection;
 
-  static Future<void> createList(String listName) async {
+  static Future<void> createList(String listName, String userId) async {
     try {
       final payload = {
         'listName': listName,
+        'userId': userId,
       };
       await firestore
           .collection(listsCollection)
@@ -51,8 +52,12 @@ class ListsProvider {
     }
   }
 
-  static Stream<List<Map<String, dynamic>>> getData() {
-    return firestore.collection(listsCollection).snapshots().map(
+  static Stream<List<Map<String, dynamic>>> getData({required String userId}) {
+    return firestore
+        .collection(listsCollection)
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .map(
           (querySnapshot) => querySnapshot.docs.map(
             (list) {
               DocumentReference listReference =
