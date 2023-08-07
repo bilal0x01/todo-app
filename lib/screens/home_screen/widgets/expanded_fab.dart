@@ -30,6 +30,7 @@ class ExpandedFab extends StatelessWidget {
     }
 
     return SpeedDial(
+      buttonSize: const Size.square(50),
       icon: Icons.more_vert,
       activeIcon: Icons.close,
       backgroundColor: Theme.of(context).colorScheme.secondary,

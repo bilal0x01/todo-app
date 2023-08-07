@@ -110,6 +110,19 @@ class _LogInState extends State<LogIn> {
                   },
                   child: const Text("Log In"),
                 ),
+          smallVertSpace,
+          const OutlinedButton(
+            onPressed: AuthProvider.signInWithGoogle,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(FontAwesomeIcons.google, size: 18),
+                smallHorzSpace,
+                Text("Sign in with Google"),
+              ],
+            ),
+          )
         ],
       ),
     );

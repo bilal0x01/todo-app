@@ -19,10 +19,14 @@ class HomeScreen extends StatelessWidget {
           centerTitle: true,
           toolbarHeight: kToolbarHeight + 20,
           title: const AppLogo(),
-          actions: const [
+          actions: [
             TextButton(
               onPressed: AuthProvider.logout,
-              child: Row(
+              style: ButtonStyle(
+                overlayColor: MaterialStatePropertyAll(
+                    Theme.of(context).colorScheme.error),
+              ),
+              child: const Row(
                 children: [
                   Icon(Icons.logout),
                 ],

@@ -54,7 +54,6 @@ class _SignUpState extends State<SignUp> {
                     color: AppColors.secondaryColor,
                   ),
                 ),
-                errorStyle: TextStyle(height: 0.1),
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),
@@ -78,7 +77,6 @@ class _SignUpState extends State<SignUp> {
                     color: AppColors.secondaryColor,
                   ),
                 ),
-                errorStyle: TextStyle(height: 0.1),
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),
@@ -101,7 +99,6 @@ class _SignUpState extends State<SignUp> {
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.secondaryColor),
                 ),
-                errorStyle: TextStyle(height: 0.1),
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),

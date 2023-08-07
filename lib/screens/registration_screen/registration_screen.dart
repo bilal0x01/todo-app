@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../theme/app_colors.dart';
 import '../../theme/spaces.dart';
@@ -75,16 +76,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge!
-                                            .copyWith(),
-                                        children: const [
-                                          TextSpan(
-                                              text:
-                                                  "Elevate your productivity with "),
-                                          WidgetSpan(child: AppLogo()),
-                                        ])),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(),
+                                      children: const [
+                                        TextSpan(
+                                            text:
+                                                "Elevate your productivity with "),
+                                        WidgetSpan(child: AppLogo()),
+                                      ],
+                                    )),
                               )
                             : const Column(
                                 children: [
@@ -127,7 +129,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         mediumVertSpace,
                         SizedBox(
-                            height: 323,
+                            height: 326,
                             child: registrationOptions[selectedPage]),
                       ]),
                 ),

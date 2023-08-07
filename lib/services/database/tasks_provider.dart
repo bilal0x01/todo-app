@@ -17,7 +17,8 @@ class TasksProvider {
       final payload = {
         'taskName': taskName,
         'taskDetails': taskDetails,
-        'hasCompleted': false
+        'hasCompleted': false,
+        'imageUrl': '',
       };
       await firestore
           .collection(listsCollection)
@@ -33,10 +34,11 @@ class TasksProvider {
 
   static Future<void> updateTask(
     DocumentReference taskReference,
-    DocumentReference parentListReference,
+    DocumentReference parentListReference, {
     String? taskName,
-    String? taskDetails, {
-    bool taskDone = false,
+    String? taskDetails,
+    String? imageUrl,
+    bool? taskDone,
   }) async {
     final taskData = firestore
         .collection(listsCollection)
@@ -46,11 +48,14 @@ class TasksProvider {
     final existingTaskSnapshot = await taskData.get();
     final existingTaskName = existingTaskSnapshot.data()!['taskName'];
     final existingTaskDetails = existingTaskSnapshot.data()!['taskDetails'];
+    final existingTaskImageUrl = existingTaskSnapshot.data()!['imageUrl'];
+    final existingTaskStatus = existingTaskSnapshot.data()!['hasCompleted'];
     try {
       final payload = {
         'taskName': taskName ?? existingTaskName,
         'taskDetails': taskDetails ?? existingTaskDetails,
-        'hasCompleted': taskDone
+        'hasCompleted': taskDone ?? existingTaskStatus,
+        'imageUrl': imageUrl ?? existingTaskImageUrl,
       };
       await taskData.update(payload);
     } catch (e) {

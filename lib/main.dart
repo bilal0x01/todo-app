@@ -89,8 +89,6 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            overlayColor:
-                MaterialStatePropertyAll(Theme.of(context).colorScheme.error),
             foregroundColor:
                 const MaterialStatePropertyAll(AppColors.textColor),
           ),
@@ -118,6 +116,9 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Raleway',
             fontWeight: FontWeight.w600,
           ),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          errorStyle: TextStyle(height: 0.2),
         ),
         useMaterial3: true,
       ),

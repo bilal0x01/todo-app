@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:todo_app/screens/home_screen/widgets/task_image_button.dart';
 
 import 'app_text_field.dart';
 import '../../../services/database/tasks_provider.dart';
@@ -27,14 +28,19 @@ class _TaskItemState extends State<TaskItem> {
 
   @override
   Widget build(BuildContext context) {
-    void Function()? submitData(taskRef) {
+    void Function()? submitData() {
       Navigator.pop(context);
 
       TasksProvider.updateTask(
-        taskRef,
+        widget.taskData['docReference'],
         widget.listTasksReference,
-        taskNameController.text.isEmpty ? null : taskNameController.text,
-        taskDetailsController.text.isEmpty ? null : taskDetailsController.text,
+        taskName:
+            taskNameController.text.isEmpty ? null : taskNameController.text,
+        taskDetails: taskDetailsController.text.isEmpty
+            ? null
+            : taskDetailsController.text,
+        imageUrl: null,
+        taskDone: null,
       );
       taskNameController.clear();
       taskDetailsController.clear();
@@ -64,18 +70,19 @@ class _TaskItemState extends State<TaskItem> {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.subtleColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           onTap: () => showTextfieldSheet(
             context: context,
             sheetTitle: "Edit task",
             sheetWidgetList: [
               for (var i = 0; i < 2; i++)
                 AppTextField(
-                  editCompleteFunction: i == 1
-                      ? () => (submitData(widget.taskData['docReference']),)
-                      : null,
+                  editCompleteFunction: i == 1 ? submitData : null,
                   fieldController:
                       i == 0 ? taskNameController : taskDetailsController,
                   fieldHintText:
@@ -83,11 +90,10 @@ class _TaskItemState extends State<TaskItem> {
                   nextIconKeyboard: i == 0 ? true : false,
                 ),
             ],
-            sheetSubmitAction: () =>
-                submitData(widget.taskData['docReference']),
+            sheetSubmitAction: submitData,
           ),
           minVerticalPadding: 0,
-          contentPadding: const EdgeInsets.fromLTRB(10, 0, 30, 0),
+          contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
           horizontalTitleGap: 8,
           leading: IconButton(
             icon: widget.taskData['docData']['hasCompleted'] as bool
@@ -100,8 +106,9 @@ class _TaskItemState extends State<TaskItem> {
                   TasksProvider.updateTask(
                     (widget.taskData['docReference']),
                     widget.listTasksReference,
-                    null,
-                    null,
+                    taskName: null,
+                    taskDetails: null,
+                    imageUrl: null,
                     taskDone: !widget.taskData['docData']['hasCompleted'],
                   );
                 },
@@ -129,6 +136,12 @@ class _TaskItemState extends State<TaskItem> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+          trailing: TaskImageButton(
+            imageCurrentUrl: widget.taskData['docData']['imageUrl'],
+            taskData: widget.taskData,
+            listRef: widget.listTasksReference,
+            ctx: context,
+          ),
         ),
       ),
     );
