@@ -1,8 +1,9 @@
 # JotTask
 Empower your productivity with JotTask, a sleek and intuitive task management solution that helps you stay organized and accomplish more, effortlessly.
 
-![JotTask-title-image](https://firebasestorage.googleapis.com/v0/b/todo-app-df058.appspot.com/o/Grey%20Black%20Modern%20Digital%20Product%20%20Mockup%20Shadow%20Instagram%20Post.png?alt=media&token=3f04d686-ddb0-4fc1-9e0a-801a54ef30af)
-
+<div align="center">
+  <img src="https://firebasestorage.googleapis.com/v0/b/todo-app-df058.appspot.com/o/Grey%20Black%20Modern%20Digital%20Product%20%20Mockup%20Shadow%20Instagram%20Post.png?alt=media&token=3f04d686-ddb0-4fc1-9e0a-801a54ef30af" alt="JotTask Title Image" width="60%">
+</div>
 
 
 ## 🎯 Features
